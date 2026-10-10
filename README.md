@@ -1,4 +1,5 @@
-| WiFi Location & MAC Detector
+# DANISH_V2 SECURITY SUITS - Certified
+Termux Advance Network Scanner | WiFi Location & MAC Detector
 
 ## 📜 Certification ID: CYB-2026-DANISH-001
 This project is certified under Ethical Hacking Standards.
