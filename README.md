@@ -11,8 +11,8 @@ This project is certified under Ethical Hacking Standards.
 - Device Type Detection (Router / Phone / PC)
 
 ## ▶️ How to Run in Termux
-chmod +x scanner.sh
-./scanner.sh
+chmod +x Danish.sh
+./Danish.sh
 
 ## 🔗 Verified By
 GitHub: https://github.com/DANISH81-cpu/DANISH_V2_SECURITY_SUITS
