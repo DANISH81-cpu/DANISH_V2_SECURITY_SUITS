@@ -1,0 +1,49 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+green='\033[1;32m'
+yellow='\033[1;33m'
+nc='\033[0m'
+
+echo -e "${green}=== DANISH_V2 - Termux Network Scanner ===${nc}\n"
+
+# اپنا گیٹ وے نکالو
+GATEWAY=$(ip route | grep default | awk '{print $3}' | head -n1)
+BASE=$(echo $GATEWAY | cut -d'.' -f1-3)
+
+if [ -z "$BASE" ]; then
+  BASE="192.168.1"
+fi
+
+echo -e "${yellow}[*] Your Gateway: $GATEWAY${nc}"
+echo -e "${yellow}[*] Scanning Network: $BASE.0/24 - Please wait...${nc}\n"
+
+printf "${green}%-15s | %-17s | %-20s${nc}\n" "IP Address" "MAC Address" "Hostname"
+echo "----------------------------------------------------------------"
+
+for i in {1..254}; do
+  ip="$BASE.$i"
+  # Termux میں ping
+  ping -c 1 -W 1 $ip > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    mac=$(ip neigh | grep "$ip" | awk '{print $5}')
+    if [ -z "$mac" ]; then
+        mac="Unknown"
+    fi
+    
+    # Hostname لینے کی کوشش
+    host=$(getent hosts $ip | awk '{print $2}')
+    if [ -z "$host" ]; then
+        host="Unknown"
+    fi
+
+    # Type کا اندازہ
+    type="Phone/PC"
+    if [[ $ip == $GATEWAY ]]; then
+        type="Router"
+    fi
+
+    printf "%-15s | %-17s | %-20s (%s)\n" "$ip" "$mac" "$host" "$type"
+  fi
+done
+
+echo -e "\n${green}Scan Completed!${nc}"
